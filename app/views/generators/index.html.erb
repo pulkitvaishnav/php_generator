@@ -1,17 +1,20 @@
-<h1>PHP Generator</h1>
-<label>
-	<b>Paste your Bootstrap code from <a href="http://www.bootsnipp.com/forms">Bootsnipp form builder</a> </b>
-</label><br>
-<%= form_for(@generator) do |f| %>
-  <ul>
-  <% @article.errors.full_messages.each do |error| %>
-    <li><%= error %></li>
-  <% end %>
-  </ul>
-  <p>
-    <%= f.text_area :body %>
-  </p>
-  <p>
-    <%= f.submit %>
-  </p>
-<% end %>
+<html>
+	<head>
+  		<title>PHP-Generator</title>
+	</head>
+	<body>
+  		<h1>PHP Generator</h1>
+  		<label>
+			<b>Paste your Bootstrap code from <a href="http://www.bootsnipp.com/forms">Bootsnipp form builder</a> </b>
+  		</label><br>
+
+  		<%= form_tag(:action => 'create') do %>
+    		<%= text_area_tag 'input_code' %>
+    		<%= submit_tag 'Submit' %>
+  		<% end %>
+
+<div style='border: 1px solid red'>
+  <%= @input_code %>
+</div>
+	</body>
+</html>
