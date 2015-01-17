@@ -1,5 +1,8 @@
 PhpGenerator::Application.routes.draw do
   #root :to => 'generator#index'
   #resources :generators, :collection=>{:index => :get, :php_generator => :generator}
-  resources :generators  
+  resources :generator  
+  get "generators/form"
+  post "generators/form"
+  #get "generators/show"
 end

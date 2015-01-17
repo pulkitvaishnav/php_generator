@@ -1,1 +1,18 @@
-<h1>hello ji</h1>
+<html>
+	<head>
+  		<title>PHP-Generator</title>
+	</head>
+	<body>
+  		<h1>PHP Generator</h1>
+  		<label>
+			<b>Paste your Bootstrap code from <a href="http://www.bootsnipp.com/forms">Bootsnipp form builder</a> </b>
+  		</label><br>
+
+  		<%= form_tag(:action => 'create') do %>
+    		<%= text_area_tag 'input_code' %>
+    		<%= submit_tag 'Submit' %>
+  		<% end %>
+
+
+	</body>
+</html>

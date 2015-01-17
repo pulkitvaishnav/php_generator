@@ -1,0 +1,12 @@
+<% content_for :title do %>
+  About us
+<% end %>
+<h1>Ask a question</h1>
+<%= form_tag do %>
+  <%= text_area_tag 'name' %><br>
+  <%= submit_tag 'Submit your input' %>
+<% end %>
+<div style="border:1px solid red">
+  <%= @name %>
+</div>
+<%= @name.inspect %>
