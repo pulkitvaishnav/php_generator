@@ -26,16 +26,20 @@ class GeneratorsController < ApplicationController
 		#$/ = "</form>"
 		#user_input = user_input.try(:split,"\n")
 		input_array = Array.new
+		@output_array = Array.new
 		@name.to_s.try(:split, "\n").each do |i|
-			each_element = i.to_s.try(:split, /[<>\s]/)
+			each_element = i.try(:split, /[<>\s]/)
 			input_array.push each_element
-			logger.debug
+			#logger.debug
 		end
+		#logger.debug "<?php \ninclude(database_connect.php);"
+		@output_array.push "<?php \ninclude(database_connect.php);"	
 		input_array.each do |each_element|
-			if each_element.include?('button')
+			if each_element.select{|type| type.match(/button=.*/)}
 				#if each_element.include?('type="submit"')
-				logger.debug "<?php \n\tinclude(database_connect.php);"
-				logger.debug "\tif(isset($_POST['submit'])){"
+				#logger.debug "\tif(isset($_POST['submit'])){"
+				@output_array.push "\tif(isset($_POST['submit'])){"
+				break;
 				#end
 			end
 		end
@@ -47,9 +51,10 @@ class GeneratorsController < ApplicationController
 				#$input = $_POST['input'];
 				if name.length >= 1
 					name = name.to_s
-					name = name.slice(6 .. -2)
+					name = name.slice(9 .. -5)
 					value_of_attribute.push name
-					logger.debug "\t\t$#{name} = $_POST['#{name}'];"
+					#logger.debug "\t\t$#{name} = $_POST['#{name}'];"
+					@output_array.push "\t\t$#{name} = $_POST['#{name}'];"
 					counter = counter + 1
 				end
 			end
@@ -76,9 +81,15 @@ class GeneratorsController < ApplicationController
 		end
 		values_for_attributes = values_for_attributes + ");"
 		sql = intial_query + no_of_attribute + values_for_attributes
-		logger.debug sql
-		logger.debug "\t\tmysqli_query($dbconnect, $sql);"
-		logger.debug "\t}"
-		logger.debug "?>"
+		#logger.debug sql
+		@output_array.push sql.to_s
+		#logger.debug "\t\tmysqli_query($dbconnect, $sql);"
+		@output_array.push "\t\tmysqli_query($dbconnect, $sql);"
+		#logger.debug "\t}"
+		@output_array.push "\t}"
+		#logger.debug "?>"
+		@output_array.push "?>"
+		#logger.debug @output_array
+		#render text: @output_array.to_s
 	end
 end

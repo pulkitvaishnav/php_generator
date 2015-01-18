@@ -1,12 +1,21 @@
+<html>
+
+<body>
 <% content_for :title do %>
   About us
 <% end %>
-<h1>Ask a question</h1>
+<h1>PHP Generator</h1>
+      <label>
+      <b>Paste your Bootstrap code from <a href="http://www.bootsnipp.com/forms">Bootsnipp form builder</a> </b>
+      </label><br>
 <%= form_tag do %>
-  <%= text_area_tag 'name' %><br>
+  <%= text_area_tag 'name',nil, rows: 20, cols: 70 %><br>
   <%= submit_tag 'Submit your input' %>
 <% end %>
 <div style="border:1px solid red">
-  <%= @name %>
+  <br><%= @output_array.each do |i| %>
+    <%= i %><br><br>
+  <% end %>
 </div>
-<%= @name.inspect %>
+</body>
+</html>
