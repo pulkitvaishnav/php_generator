@@ -22,7 +22,7 @@ class GeneratorsController < ApplicationController
 	end
 	def form
 		@name = params[:name]
-		user_input = @name
+		#user_input = @name
 		#$/ = "</form>"
 		#user_input = user_input.try(:split,"\n")
 		input_array = Array.new
@@ -47,16 +47,20 @@ class GeneratorsController < ApplicationController
 		value_of_attribute = Array.new
 		input_array.each do |each_element|
 			name = each_element.select{|type| type.match(/name=.*/)}
-			if name
-				#$input = $_POST['input'];
-				if name.length >= 1
-					name = name.to_s
-					name = name.slice(9 .. -5)
+			
+			#$input = $_POST['input'];
+			if name.length >= 1
+				name = name.to_s
+				name = name.slice(9 .. -5)
+				#value_of_attribute.push name
+				#logger.debug "\t\t$#{name} = $_POST['#{name}'];"
+				if !(name .eql? "submit")
 					value_of_attribute.push name
-					#logger.debug "\t\t$#{name} = $_POST['#{name}'];"
-					@output_array.push "\t\t$#{name} = $_POST['#{name}'];"
+					@output_array.push "\t\t$#{name} = $_POST['#{name}'];"	
 					counter = counter + 1
-				end
+				else
+				 	break
+			 	end
 			end
 		end
 		intial_query = "\t\tINSERT INTO `<database_name>`.`<table_name>`"
