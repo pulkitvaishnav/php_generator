@@ -1,0 +1,44 @@
+
+<% content_for :title do %>
+  About us
+<% end %>
+<h1>PHP Generator</h1>
+      <label>
+      <b>Paste your Bootstrap code from <a href="http://www.bootsnipp.com/forms">Bootsnipp form builder</a> </b>
+      </label><br>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_tag do %>
+      <%= text_area_tag 'name',nil, rows: 17, cols: 60  %><br>
+      <%= submit_tag 'Submit your input', class: "btn btn-primary" %>
+    <% end %>
+  </div>
+  <div class="col-md-6 col-md-offset-3"><br>
+    <%= @output_array.each do |i| %>
+      <%= i %><br><br>
+    <% end %>
+  </div>
+</div>
+
+</div>
+<form>
+  <div class="form-group">
+    <label for="exampleInputEmail1">Email address</label>
+    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword1">Password</label>
+    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+  </div>
+  <div class="form-group">
+    <label for="exampleInputFile">File input</label>
+    <input type="file" id="exampleInputFile">
+    <p class="help-block">Example block-level help text here.</p>
+  </div>
+  <div class="checkbox">
+    <label>
+      <input type="checkbox"> Check me out
+    </label>
+  </div>
+  <button type="submit" class="btn btn-default">Submit</button>
+</form>
