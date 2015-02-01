@@ -15,6 +15,7 @@ class GeneratorsController < ApplicationController
 		@database_name = params[:database_name]
 		@table_name = params[:table_name]
 		@database_attr = params[:database_attr]
+		@cond = params[:cond]
 		input_array = Array.new
 		@output_array = Array.new
 		@name.to_s.try(:split, "\n").each do |i|
@@ -32,7 +33,7 @@ class GeneratorsController < ApplicationController
 		counter = 0
 		value_of_attribute = Array.new		
 		@output_array, counter, value_of_attribute, radiocounter = get_attributes(counter, value_of_attribute, input_array)
-		sql = input_query(counter, value_of_attribute, radiocounter, @database_name, @table_name, @database_attr)
+		sql = update_query(counter, value_of_attribute, radiocounter, @database_name, @table_name, @database_attr, @cond)
 		
 		if @name.to_s.length > 0
 			@output_array.push sql.to_s

@@ -68,5 +68,38 @@ module ApplicationHelper
 	 	end
 	 	return no_of_attribute
 	end
+	def update_query(counter, value_of_attribute, radiocounter, database_name, table_name, database_attr, cond)
+		#UPDATE  `xyz`.`APPLE_PRODUCT` SET  `model` =  'i-pad' WHERE  `APPLE_PRODUCT`.`s_no` =1;
+		no_of_attribute = ""
+		if database_name.to_s.length > 0
+				intial_query = "UPDATE `#{database_name}`.`#{table_name}` SET "
+		else
+				intial_query = "UPDATE `<database_name>`.`<table_name>` SET "
+		end
+		if database_attr.to_s.length > 0
+			database_attr.to_s.try(:split, ", ").zip(value_of_attribute.to_a).each_with_index do |element, index|
+				if index < counter-1
+					no_of_attribute = no_of_attribute + "`#{element[0]}` = '#{element[1]}', "
+				else
+					no_of_attribute = no_of_attribute + "`#{element[0]}`= #{element[1]}"
+				end
+
+		 	end
+		else
+			value_of_attribute.each_with_index do |values_for_attributes, index|
+				if index<counter-1
+					no_of_attribute = no_of_attribute + "`attribute_#{index}` = '#{values_for_attributes}', "
+				else
+					no_of_attribute = no_of_attribute + "`attribute_#{index}` = '#{values_for_attributes}'"
+				end
+			end
+		end
+		if cond.length > 0
+			condition = " WHERE #{cond}"
+		else
+			condition = " WHERE <condition>"
+		end
+		return sql = "\t\t$sql = " + intial_query + no_of_attribute + condition
+	end
 		
 end
