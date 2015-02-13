@@ -1,7 +1,11 @@
 module ApplicationHelper
 	def input_query(counter, value_of_attribute, radiocounter, database_name, table_name, database_attr)
-			if database_name.to_s.length > 0
+			if database_name.to_s.length > 0 && table_name.to_s.length > 0
 				intial_query = "INSERT INTO `#{database_name}`.`#{table_name}`"
+			elsif table_name.to_s.length > 0 && database_name.to_s.length < 1 
+				intial_query = "INSERT INTO `<database_name>`.`#{table_name}`"
+			elsif table_name.to_s.length < 1 && database_name.to_s.length > 0
+				intial_query = "INSERT INTO `#{database_name}`.`<table_name>`"
 			else
 				intial_query = "INSERT INTO `<database_name>`.`<table_name>`"
 			end
@@ -43,15 +47,12 @@ module ApplicationHelper
 		return @output_array, counter, value_of_attribute, radiocounter
 	end
 	def attributes_name(database_name, table_name, database_attr, counter, radiocounter, no_of_attribute)
-	 	if database_name.to_s.length > 0
+	 	if database_attr.to_s.length > 0
 	 		database_attr.to_s.try(:split, ",").each_with_index do |element, index|
 
-	 			if index < counter-1 && radiocounter<2
+	 			if index < counter-1 	
 	 				no_of_attribute = no_of_attribute + "`#{element}`, "
 	 			else
-	 				if radiocounter>2
-	 					next	
-	 				end
 	 				no_of_attribute = no_of_attribute + "`#{element}`"
 	 			end
 
@@ -94,12 +95,56 @@ module ApplicationHelper
 				end
 			end
 		end
-		if cond.length > 0
-			condition = " WHERE #{cond}"
-		else
-			condition = " WHERE <condition>"
-		end
-		return sql = "\t\t$sql = " + intial_query + no_of_attribute + condition
-	end
+		condition = where_cond(cond)
 		
+		return sql = "\t\t$sql = " + intial_query + no_of_attribute + condition.to_s
+	end
+	
+	def delete_query(database_name, table_name, cond)
+		no_of_attribute = ""
+		if database_name.to_s.length > 0 && table_name.to_s.length > 0
+			intial_query = "DELETE `#{database_name}`.`#{table_name}` FROM "
+		elsif table_name.to_s.length > 0 && database_name.to_s.length < 1 
+			intial_query = "DELETE `<database_name>`.`#{table_name}`"
+		elsif table_name.to_s.length < 1 && database_name.to_s.length > 0
+			intial_query = "DELETE `#{database_name}`.`<table_name>`"				
+		else
+			intial_query = "DELETE `<database_name>`.`<table_name>` FROM "
+		end
+		where = where_cond(cond)
+		return "$sql = " + intial_query + where 
+
+	
+	end
+	def select_query(database_name, table_name, database_attr, cond)
+		if database_attr.to_s.length > 0
+			intial_query ="\tSELECT " + database_attr + " FROM " +"table_name" + where_cond(cond).to_s		
+		else
+			intial_query ="\tSELECT " + " * " + " FROM " +"table_name" + where_cond(cond).to_s
+		end
+		
+	end
+	def select_attributes(database_attr)
+		element = "\techo "
+		database_attr.to_s.try(:split, ", ").each do |element|
+			element = element + "$row['#{element}'] ."
+		end
+		element = element.to_s.slice(-1)
+		return element
+	end
+	def where_cond(cond)
+		if cond.to_s.length > 0
+			return " WHERE #{cond};"
+		else
+			return " WHERE <condition>;"
+		end
+	end
+	def execute_query(input)
+		if input
+			@output_array.push "\t\tmysqli_query($dbconnect, $sql);"
+			@output_array.push "\t}"
+			@output_array.push "?>"
+		end
+	end
 end
+

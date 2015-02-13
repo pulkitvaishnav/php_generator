@@ -10,36 +10,83 @@ class GeneratorsController < ApplicationController
 	def new
 		
 	end
+	def download
+    	send_file 'app/assets/data/database_connect.php', :type=>"application/php"
+  	end
 	def form
-		@name = params[:name]
+		@input_code = params[:input_code]
 		@database_name = params[:database_name]
 		@table_name = params[:table_name]
 		@database_attr = params[:database_attr]
 		@cond = params[:cond]
+		@query_type=params[:query_type]
 		input_array = Array.new
 		@output_array = Array.new
-		@name.to_s.try(:split, "\n").each do |i|
+		@input_code.to_s.try(:split, "\n").each do |i|
 			each_element = i.try(:split, /[<>\s]/)
 			input_array.push each_element
 		end
+		input = @input_code.to_s.length > 1
+		name = ''
 		input_array.each do |each_element|
+			input = each_element.to_s .eql? ["", "/form"].to_s
+		end
+		if input
 			@output_array.push "<?php"
-			@output_array.push "\tinclude(database_connect.php);"	
-			if each_element.select{|type| type.match(/button=.*/)}
-				@output_array.push "\tif(isset($_POST['submit'])){"
-				break;
+			@output_array.push "\tinclude(database_connect.php);"
+		else
+			@output_array.push "Please paste a valid code."
+		end
+
+
+		counter = 0
+		value_of_attribute = Array.new
+
+		if (@query_type .eql? "Insert") && input
+			@output_array.push "\tif ( isset( $_POST['submit'] ) ){"
+			@output_array, counter, value_of_attribute, radiocounter = get_attributes(counter, value_of_attribute, input_array)
+			sql_input = input_query(counter, value_of_attribute, radiocounter, @database_name, @table_name, @database_attr)
+			@output_array.push sql_input.to_s
+			if input
+				@output_array.push "\t\tmysqli_query($dbconnect, $sql);"
+				@output_array.push "\t}"
+				@output_array.push "?>"
+			end
+		elsif @query_type .eql? 'Update'
+			@output_array.push "\tif ( isset( $_POST['update'] ) ){"
+			@output_array, counter, value_of_attribute, radiocounter = get_attributes(counter, value_of_attribute, input_array)
+			sql_update = update_query(counter, value_of_attribute, radiocounter, @database_name, @table_name, @database_attr, @cond)
+			@output_array.push sql_update.to_s
+			if input
+				@output_array.push "\t\tmysqli_query($dbconnect, $sql);"
+				@output_array.push "\t}"
+				@output_array.push "?>"
+			end
+		elsif (@query_type. eql? "Delete") && input
+			@output_array.push "\tif ( isset( $_POST['delete'] ) ){"
+			sql_delete = delete_query(@database_name, @table_name, @cond)
+			@output_array.push sql_delete.to_s
+			if input
+				@output_array.push "\t\tmysqli_query($dbconnect, $sql);"
+				@output_array.push "\t}"
+				@output_array.push "?>"
+			end
+		else
+			if input
+				sql_select = select_query(@database_name, @table_name, @database_attr, @cond)
+				@output_array.push sql_select
+				@output_array.push "\tmysqli_query($dbconnect, $sql);"
+				@output_array.push "\twhile($row = mysqli_fetch_array($result)){"
+				if @database_attr.to_s.length > 0
+					attributes = select_attributes(@database_attr).to_s + ";" 	
+					@output_array.push attributes
+				else
+					@output_array.push "\t\techo $row['attribute_1'].$row['attribute_2']...$row['attribute_n'];"
+				end
+				@output_array.push "\t}"
+				@output_array.push "?>"
 			end
 		end
-		counter = 0
-		value_of_attribute = Array.new		
-		@output_array, counter, value_of_attribute, radiocounter = get_attributes(counter, value_of_attribute, input_array)
-		sql = update_query(counter, value_of_attribute, radiocounter, @database_name, @table_name, @database_attr, @cond)
 		
-		if @name.to_s.length > 0
-			@output_array.push sql.to_s
-			@output_array.push "\t\tmysqli_query($dbconnect, $sql);"
-			@output_array.push "\t}"
-			@output_array.push "?>"
-		end
 	end
 end
