@@ -87,6 +87,10 @@ class GeneratorsController < ApplicationController
 				@output_array.push "?>"
 			end
 		end
-		
+		# respond_to do |format|
+		# 	if @output_array
+		# 		format.js
+		# 	end	
+		# end		
 	end
 end

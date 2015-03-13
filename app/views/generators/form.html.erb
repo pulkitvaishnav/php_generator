@@ -3,13 +3,13 @@
   PHP-Snipp
 <% end %> 
 <div class = "container">
-  <h1>PHP Generator</h1>
+  <h1>PHP-Snipp</h1>
       <br>
       <div class="row">
         <div class="col-md-6">
         <!-- Button trigger modal -->
         <!-- Modal -->
-        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
           Instructions
         </button><br><br>
           <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -43,20 +43,51 @@
         <label>
           <b>Paste your Bootstrap code from <a href="http://www.bootsnipp.com/forms" target="blank" >Bootsnipp form builder</a> </b>
         </label>
-        <%= form_tag do %>
-            <%= text_area_tag 'input_code', nil,rows: 17, cols: 60 %><br>
+        <%= form_tag(html: {class: 'form-horizontal'}) do %>
+          
+          <div class="form-group">
+            <%= text_area_tag 'input_code', nil,rows: 17, cols: 60, class: "form-control" %><br>
+          </div>
+
+          <div class="form-group">
             <label>Select query type</label>
-              <%= select_tag "query_type", "<option>Insert</option><option>Update</option><option>Delete</option><option>Select</option>".html_safe %><br>
-            <h3>Optional(Database Information):</h3>
-            <label>Database name</label>&nbsp
-            <%= text_field_tag 'database_name' %><br>
-            <label>Table name</label>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-            <%= text_field_tag 'table_name' %><br>
-            <label>Table attributes</label>
-            <%= text_field_tag 'database_attr'%><i>Insert in comma separation(eg. a_1, a_2 ...)</i><br>
-            <label>Where condition</label>
-              <%= text_field_tag 'cond' %><i>Condition(It is not for insert query.)</i><br>
-            <%= submit_tag 'Generate PHP', class: "btn btn-primary" %>
+              <%= select_tag "query_type", "<option>Insert</option><option>Update</option><option>Delete</option><option>Select</option>".html_safe, class: "btn btn-default dropdown-toggle" %><br>
+          </div>
+
+          <h3>Optional(Database Information):</h3>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="field form-group">
+                <label>Database name</label><br />
+                <%= text_field_tag 'database_name', nil, :class => 'form-control' %>
+                <span class="help-block">help</span> 
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="field form-group">
+                <label>Table name</label><br />
+                <%= text_field_tag 'table_name', nil, :class => 'form-control' %>
+                <span class="help-block">help</span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="field form-group">
+                <label>Table attributes</label><br />
+                <%= text_field_tag 'database_attr', nil,  :class=> 'form-control'%>
+                <span class="help-block">help</span>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="field form-group">
+                 <label>Condition</label><br />
+                 <%= text_field_tag 'cond', nil, :class=>'form-control' %><br>
+                 <span class="help-block">help</span>
+              </div>
+            </div>
+          </div>          
+          <%= submit_tag 'Generate PHP', :class => "btn btn-primary" %>
 
         <% end %>
         <br><br><br>
@@ -64,11 +95,15 @@
       <div class="col-md-6">
         <label>Output:</label><br>
         <b><%= link_to "Download 'database_connect.php' (Click here).", "download" %></b>
-        <% @output_array.each do |i|%>
-          <pre><%= i %></pre>
-        <% end %>
+        <pre> <code> 
+          <% @output_array.each do |i|%>
+            <section><%= i %></section>
+              
+        <% end %></code></pre>
       </div>
 
     </div>
-    
+    <div class="section-colored text-center">
+      <p>Developed by: <a href="https://github.com/pulkitvaishnav" target="blank">Pulkit Vaishnav</a></p>
+    </div>
 </div>
