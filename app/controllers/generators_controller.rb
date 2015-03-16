@@ -71,6 +71,30 @@ class GeneratorsController < ApplicationController
 				@output_array.push "\t}"
 				@output_array.push "?>"
 			end
+		elsif @query_type.eql? 'Complete-CRUD'
+			@output_array.push "\t if (isset($_POST['submit'])){"
+			@output_array, counter, value_of_attribute, radiocounter =  get_attributes(counter, value_of_attribute, input_array)
+			sql_input = input_query(counter, value_of_attribute, radiocounter, @database_name, @table_name, @database_attr)
+			@output_array.push sql_input.to_s
+			sql_update = update_query(counter, value_of_attribute, radiocounter, @database_name, @table_name, @database_attr, @cond)
+			@output_array.push sql_update.to_s
+			sql_delete = delete_query(@database_name, @table_name, @cond)
+			@output_array.push sql_delete.to_s
+			if input
+				sql_select = select_query(@database_name, @table_name, @database_attr, @cond)
+				@output_array.push sql_select
+				@output_array.push "\t\tmysqli_query($dbconnect, $sql);"
+				@output_array.push "\t\twhile($row = mysqli_fetch_array($result)){"
+				if @database_attr.to_s.length > 0
+					attributes = select_attributes(@database_attr).to_s + ";" 	
+					@output_array.push attributes
+				else
+					@output_array.push "\t\techo $row['attribute_1'].$row['attribute_2']...$row['attribute_n'];"
+				end
+				@output_array.push "\t}"
+				@output_array.push "?>"
+			end
+
 		else
 			if input
 				sql_select = select_query(@database_name, @table_name, @database_attr, @cond)
@@ -87,10 +111,9 @@ class GeneratorsController < ApplicationController
 				@output_array.push "?>"
 			end
 		end
-		# respond_to do |format|
-		# 	if @output_array
-		# 		format.js
-		# 	end	
-		# end		
+		respond_to do |format|
+		 	format.html
+		 	format.js	
+		end		
 	end
 end

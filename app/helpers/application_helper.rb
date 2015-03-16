@@ -35,7 +35,7 @@ module ApplicationHelper
 				if each_element.select{|type| type.match(/name=radio.*/)}
 					radiocounter = radiocounter + 1
 				end
-				if !(name .eql? "submit")
+				if !(name .eql? "submit") && !(name.match(/\w*button\b/))
 					value_of_attribute.push name
 					@output_array.push "\t\t$#{name} = $_POST['#{name}'];"	
 					counter = counter + 1
@@ -112,15 +112,15 @@ module ApplicationHelper
 			intial_query = "DELETE `<database_name>`.`<table_name>` FROM "
 		end
 		where = where_cond(cond)
-		return "$sql = " + intial_query + where 
+		return "\t\t$sql = " + intial_query + where 
 
 	
 	end
 	def select_query(database_name, table_name, database_attr, cond)
 		if database_attr.to_s.length > 0
-			intial_query ="\tSELECT " + database_attr + " FROM " +"table_name" + where_cond(cond).to_s		
+			intial_query ="\t$sql = SELECT " + database_attr + " FROM " +"table_name" + where_cond(cond).to_s		
 		else
-			intial_query ="\tSELECT " + " * " + " FROM " +"table_name" + where_cond(cond).to_s
+			intial_query ="\t$sql =  SELECT " + " * " + " FROM " +"table_name" + where_cond(cond).to_s
 		end
 		
 	end
