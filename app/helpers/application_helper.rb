@@ -48,7 +48,7 @@ module ApplicationHelper
 	end
 	def attributes_name(database_name, table_name, database_attr, counter, radiocounter, no_of_attribute)
 	 	if database_attr.to_s.length > 0
-	 		database_attr.to_s.try(:split, ",").each_with_index do |element, index|
+	 		database_attr.to_s.try(:split, ", ").each_with_index do |element, index|
 
 	 			if index < counter-1 	
 	 				no_of_attribute = no_of_attribute + "`#{element}`, "

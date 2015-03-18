@@ -1,44 +1,114 @@
 
 <% content_for :title do %>
-  About us
-<% end %>
-<h1>PHP Generator</h1>
-      <label>
-      <b>Paste your Bootstrap code from <a href="http://www.bootsnipp.com/forms">Bootsnipp form builder</a> </b>
-      </label><br>
-<div class="row">
-  <div class="col-md-6 col-md-offset-3">
-    <%= form_tag do %>
-      <%= text_area_tag 'name',nil, rows: 17, cols: 60  %><br>
-      <%= submit_tag 'Submit your input', class: "btn btn-primary" %>
-    <% end %>
-  </div>
-  <div class="col-md-6 col-md-offset-3"><br>
-    <%= @output_array.each do |i| %>
-      <%= i %><br><br>
-    <% end %>
-  </div>
-</div>
+  PHP-Snipp
+<% end %> 
 
+<h2 id="header">PHP-Snipp: Build PHP form simply.</h2>
+<div class = "container">
+      <br>
+      <div class="row">
+        <div class="col-md-6">
+        <!-- Button trigger modal -->
+        <!-- Modal -->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+          Instructions
+        </button><b><i> || New user should go for instructions first.||</i></b><br><br>
+
+          <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="myModalLabel">Instruction</h4>
+                </div>
+                <div class="modal-body">
+                <ol>
+                   <li>Go to <a href="http://www.bootsnipp.com/forms">Bootsnipp </a>, create a form and paste the rendered code in the text area.</li><br>
+                   <li>Enter your database-name, table-name and attributes-name(i.e. database field name) in further fields.</li><br>
+                   <li>Now click on <i>Generate PHP</i> button which will generate PHP code for your form.</li><br>
+                   <li>Then download include <i>database_connect.php</i> and replace database username and password with your username and password.</li><br>
+                   <li>Paste your <i>Bootstrap</i> and <i>PHP code </i>in a file with <i>.php</i> extensions.</li><br>
+                   <li>Run it on your server.</li><br>
+                   <li>Your PHP page with database interaction is ready.</li><br>
+                </ol>  
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+      </div>
+  <div class="row">
+      <div class="col-md-6" >
+        <label>
+          <b>Paste your Bootstrap code from <a href="http://www.bootsnipp.com/forms" target="blank" >Bootsnipp form builder</a> </b>
+        </label>
+        <%= form_tag '#', :id => 'new_comment', class: 'forms-horizontal' do %>
+          
+          <div class="form-group">
+            <%= text_area_tag 'input_code',  params[:input_code],rows: 17, cols: 60, class: "form-control" %><br>
+          </div>
+
+          <div class="form-group">
+            <label>Select query type</label>
+              <%= select_tag "query_type", "<option>Insert</option><option>Update</option><option>Delete</option><option>Select</option><option>Complete-CRUD</option>".html_safe, class: "btn btn-default dropdown-toggle" %><br>
+          </div>
+
+          <h3>Database Information(Optional):</h3>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="field form-group">
+                <label>Database name</label><br />
+                <%= text_field_tag 'database_name', params[:database_name], :class => 'form-control' %>
+                <span class="help-block">eg. Blog</span> 
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="field form-group">
+                <label>Table name</label><br />
+                <%= text_field_tag 'table_name', params[:table_name], :class => 'form-control' %>
+                <span class="help-block">eg. Post</span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="field form-group">
+                <label>Table attributes</label><br />
+                <%= text_field_tag 'database_attr', params[:database_attr],  :class=> 'form-control'%>
+                <span class="help-block">Insert with comma separaton(eg. post_id, post_description, post_date etc.)</span>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="field form-group">
+                 <label>Where Condition</label><br />
+                 <%= text_field_tag 'cond', params[:cond], :class=>'form-control' %>
+                 <span class="help-block">eg. post_id = '5' (It isn't used for insert query) </span>
+              </div>
+            </div>
+          </div>          
+          <%= submit_tag 'Generate PHP', :class => "btn btn-primary" %>
+
+        <% end %>
+        <br><br><br>
+      </div>
+      <div class="col-md-6">
+        <label>Output:</label><br>
+        <b><%= link_to "Download 'database_connect.php' (Click here).", "download" %></b>
+        <div id="code">
+          <pre> <code> 
+            <% @output_array.each do |i|%>
+              <section><%= i %></section>
+                
+          <% end %></code></pre>
+          </div>
+      </div>
+
+    </div>
+    <div class="section-colored text-center">
+      <p>Developed by: <a href="https://github.com/pulkitvaishnav" target="blank">Pulkit Vaishnav</a></p>
+    </div>
 </div>
-<form>
-  <div class="form-group">
-    <label for="exampleInputEmail1">Email address</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
-  </div>
-  <div class="form-group">
-    <label for="exampleInputPassword1">Password</label>
-    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-  </div>
-  <div class="form-group">
-    <label for="exampleInputFile">File input</label>
-    <input type="file" id="exampleInputFile">
-    <p class="help-block">Example block-level help text here.</p>
-  </div>
-  <div class="checkbox">
-    <label>
-      <input type="checkbox"> Check me out
-    </label>
-  </div>
-  <button type="submit" class="btn btn-default">Submit</button>
-</form>
+  

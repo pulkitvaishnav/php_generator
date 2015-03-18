@@ -4,8 +4,9 @@
   <title>PHP_Generator</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+  <%= stylesheet_link_tag "bootstrap", "bootstrap.min", "freelancer" %>
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"> -->
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"> -->
   <style type="text/css">
     #header {
     background-color: #423E3E;
@@ -14,18 +15,9 @@
     padding: 10px;
     }
   </style>
-  <%= javascript_include_tag "jquery", "application", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-   <script type="text/javascript">
-    $(window).load(function(){
-      // //$('#myModal').modal('show');
-      // $('#input_code')(function(){
-      //   onClick.history.go(0);
-      // })
-    });
-</script>
   <%= csrf_meta_tags %>
-  <%= yield(:head)%>
 </head>
 <body>
 
