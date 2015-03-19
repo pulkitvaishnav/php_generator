@@ -36,8 +36,8 @@ class GeneratorsController < ApplicationController
 		elsif input && @query_type.to_s.length > 2
 			@output_array.push "<?php"
 			@output_array.push "\tinclude(database_connect.php);"
-		elsif @query_type.to_s.length < 2
-			@output_array.push "Please paste a code or select any query type."			
+		elsif @query_type.to_s.length < 2 || !input
+			@output_array.push "Please paste a code and select any query type."			
 		end
 
 
@@ -96,10 +96,6 @@ class GeneratorsController < ApplicationController
 				@output_array.push "\t}"
 				@output_array.push "?>"
 			end
-		elsif @query_type.to_s.length < 2
-			flash.now[:error] = "Could not save client"
-			
-
 		else
 			if input
 				sql_select = select_query(@database_name, @table_name, @database_attr, @cond)

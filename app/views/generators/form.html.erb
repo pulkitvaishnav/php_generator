@@ -55,6 +55,7 @@
          <div class="container">
               <div class="row">
                 <div class="col-lg-12 text-center">
+                    <br>
                     <h2>PHP Generator</h2>
                     <hr class="star-primary">
                 </div>
@@ -65,7 +66,7 @@
                   <%= form_tag '#', :id => 'new_comment', class: 'forms-horizontal' do %>
                     
                       <div class="form-group">
-                          <%= text_area_tag 'input_code',  params[:input_code],rows: 17, cols: 60, class: "form-control" %><br>
+                          <%= text_area_tag 'input_code',  params[:input_code],rows: 17, cols: 60, class: "form-control", class: "input-large popover-input", rel: "popover", :"data-content"=>"Enter First Name" %><br>
                       </div>
 
                       <div class="form-group">
@@ -106,7 +107,11 @@
                             </div>
                           </div>
                           <hr>
-                        </div>          
+                        </div> 
+                        <div class="row">
+                            <hr><br>&nbsp;&nbsp;
+                             <%= link_to "Download 'database_connect.php'", "download", class: "btn btn-large btn-primary" %>
+                        </div>         
                   </div>
                 <div class="col-md-6">
                   <label>Output:</label><br>
@@ -124,6 +129,7 @@
                <div class="section-colored text-center">
               <hr>
               <%= submit_tag 'Generate PHP', :class => "btn btn-large btn-primary" %><br><br>
+
                 <hr>
             </div>
     <% end %>
@@ -151,7 +157,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2>Instructions</h2>
+                    <br><h2>Instructions</h2>
                     <hr class="star-light">
                 </div>
             </div>
@@ -176,16 +182,16 @@
          <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2>About</h2>
+                    <br><h2>About</h2>
                     <hr class="star-primary">
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-4 col-lg-offset-2">
-                    <p>PHP-Snipp is a free tool created by Pulkit Vaishnav(@<a href="https://twitter.com/vaishnavpulkit">vaishnavpulkit</a>) to help take stress out of writing ambiguous code of core PHP. It is developed in Ruby on Rails using bootstrap for its designing.</p>
+                    <p>PHP-Snipp is a free tool created by Pulkit Vaishnav(@<a href="https://twitter.com/vaishnavpulkit">vaishnavpulkit</a>) to help take the stress out of writing ambiguous code of core PHP. It is developed in Ruby on Rails using bootstrap for its designing.</p>
                 </div>
                 <div class="col-lg-4">
-                    <p>A great thank to Adam Moore(creator of <a href="http://www.bootsnipp.com/"> Bootsnipp</a>) for making our work easier. This tool is intially for only CRUD(Create Read Update and Delete) so I keep it as simple as possible. For complete code check out <a href="https://github.com/pulkitvaishnav/php_generator">Gihub project</a> and don't hesitate to create a issue if any.</p>
+                    <p>A great thank to Adam Moore(creator of <a href="http://www.bootsnipp.com/"> Bootsnipp</a>) for making our work easier. This tool is intially for only CRUD(Create Read Update and Delete) so I keep it as simple as possible. For complete code check out <a href="https://github.com/pulkitvaishnav/php_generator">Gihub project</a> and don't hesitate to create a issue(if any).</p>
                 </div>
                 <div class="col-lg-8 col-lg-offset-2 text-center">
                     <a href="#" class="btn btn-lg btn-outline">

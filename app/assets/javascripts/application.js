@@ -13,6 +13,6 @@
 //= require jquery
 //= require bootstrap
 //= require bootstrap.min
-
+//= require custom
 //= require jquery_ujs
 //= require_tree .
