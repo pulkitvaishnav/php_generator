@@ -29,13 +29,15 @@ class GeneratorsController < ApplicationController
 		input = @input_code.to_s.length > 1
 		name = ''
 		input_array.each do |each_element|
-			input = each_element.to_s .eql? ["", "/form"].to_s
+			name = each_element.to_s .eql? ["", "/form"].to_s
 		end
-		if input
+		if !name
+			@output_array.push "Please paste a valid code"
+		elsif input && @query_type.to_s.length > 2
 			@output_array.push "<?php"
 			@output_array.push "\tinclude(database_connect.php);"
-		else
-			@output_array.push "Please paste a valid code."
+		elsif @query_type.to_s.length < 2
+			@output_array.push "Please paste a code or select any query type."			
 		end
 
 
@@ -94,6 +96,9 @@ class GeneratorsController < ApplicationController
 				@output_array.push "\t}"
 				@output_array.push "?>"
 			end
+		elsif @query_type.to_s.length < 2
+			flash.now[:error] = "Could not save client"
+			
 
 		else
 			if input

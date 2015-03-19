@@ -13,12 +13,6 @@
 //= require jquery
 //= require bootstrap
 //= require bootstrap.min
-//= require cbpAnimatedHeader
-//= require cbpAnimatedHeader.min
-//= require classie
-//= require contact_me
-//= require freelancer
-//= require jquery.min
-//= require jqBootstrapValidation
+
 //= require jquery_ujs
 //= require_tree .
