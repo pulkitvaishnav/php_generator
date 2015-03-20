@@ -37,7 +37,7 @@ class GeneratorsController < ApplicationController
 			@output_array.push "<?php"
 			@output_array.push "\tinclude(database_connect.php);"
 		elsif @query_type.to_s.length < 2 || !input
-			@output_array.push "Please paste a code and select any query type."			
+			@output_array.push "Please paste a code and must select any query type."			
 		end
 
 
@@ -54,7 +54,7 @@ class GeneratorsController < ApplicationController
 				@output_array.push "\t}"
 				@output_array.push "?>"
 			end
-		elsif @query_type .eql? 'Update'
+		elsif @query_type .eql? 'Update' && input
 			@output_array.push "\tif ( isset( $_POST['update'] ) ){"
 			@output_array, counter, value_of_attribute, radiocounter = get_attributes(counter, value_of_attribute, input_array)
 			sql_update = update_query(counter, value_of_attribute, radiocounter, @database_name, @table_name, @database_attr, @cond)
@@ -73,7 +73,7 @@ class GeneratorsController < ApplicationController
 				@output_array.push "\t}"
 				@output_array.push "?>"
 			end
-		elsif @query_type.eql? 'Complete-CRUD'
+		elsif @query_type.eql? 'Complete-CRUD' && input
 			@output_array.push "\t if (isset($_POST['submit'])){"
 			@output_array, counter, value_of_attribute, radiocounter =  get_attributes(counter, value_of_attribute, input_array)
 			sql_input = input_query(counter, value_of_attribute, radiocounter, @database_name, @table_name, @database_attr)

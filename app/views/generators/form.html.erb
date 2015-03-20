@@ -109,8 +109,10 @@
                           <hr>
                         </div> 
                         <div class="row">
-                            <hr><br>&nbsp;&nbsp;
-                             <%= link_to "Download 'database_connect.php'", "download", class: "btn btn-large btn-primary" %>
+                            <br>
+                            <% if @output_array.length > 5 %>
+                             <hr>&nbsp;&nbsp;<%= link_to "Download 'database_connect.php'", "download", class: "btn btn-large btn-primary" %>
+                             <% end %>
                         </div>         
                   </div>
                 <div class="col-md-6">
@@ -193,11 +195,11 @@
                 <div class="col-lg-4">
                     <p>A great thank to Adam Moore(creator of <a href="http://www.bootsnipp.com/"> Bootsnipp</a>) for making our work easier. This tool is intially for only CRUD(Create Read Update and Delete) so I keep it as simple as possible. For complete code check out <a href="https://github.com/pulkitvaishnav/php_generator">Gihub project</a> and don't hesitate to create a issue(if any).</p>
                 </div>
-                <div class="col-lg-8 col-lg-offset-2 text-center">
+                <!-- <div class="col-lg-8 col-lg-offset-2 text-center">
                     <a href="#" class="btn btn-lg btn-outline">
                         <i class="fa fa-download"></i> Download Theme
                     </a>
-                </div>
+                </div> -->
             </div>
         </div>
         
