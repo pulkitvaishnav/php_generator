@@ -96,7 +96,7 @@ class GeneratorsController < ApplicationController
 				@output_array.push "\t}"
 				@output_array.push "?>"
 			end
-		else
+		elsif @query_type.eql? 'Select' && input
 			if input
 				sql_select = select_query(@database_name, @table_name, @database_attr, @cond)
 				@output_array.push sql_select
