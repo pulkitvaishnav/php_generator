@@ -1,5 +1,5 @@
-<nav class="navbar navbar-default navbar-fixed-top">
-        <div class="container">
+<nav class="navbar navbar-default navbar-fixed-top"  style="height: 80px;">
+        <div class="container" style="margin-top: -8; margin-top: -8px;">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header page-scroll">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -37,7 +37,7 @@
     </nav>
      <header id= "page-top">
         <div class="container">
-            <div class="row">
+            <div class="row" style="margin-top: -20;margin-top: -40px;">
                 <div class="col-lg-12">
                     
                     <div class="intro-text">
@@ -47,6 +47,7 @@
                         <%= image_tag src="php.png" %>
                           <span class="skills">Copy HTML code <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> Select Query type <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> Insert Database info <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>  Get Corresponding PHP</span>
                     </div>
+                    <br><br>
                 </div>
             </div>
         </div>
@@ -63,15 +64,15 @@
                   <label>
                     <b>Paste your Bootstrap code from <a href="http://www.bootsnipp.com/forms" target="blank" >Bootsnipp form builder</a> </b>
                   </label>
-                  <%= form_tag '#', :id => 'new_comment', class: 'forms-horizontal' do %>
+                  <%= form_tag 'form#generator', :id => 'new_comment', class: 'forms-horizontal' do %>
                     
                       <div class="form-group">
-                          <%= text_area_tag 'input_code',  params[:input_code],rows: 17, cols: 60, class: "form-control", class: "input-large popover-input", rel: "popover", :"data-content"=>"Enter First Name" %><br>
+                          <%= text_area_tag 'input_code',  params[:input_code],rows: 17, cols: 60, class: "form-control", :required => true %><br>
                       </div>
 
                       <div class="form-group">
                           <label>Select query type</label>
-                          <%= select_tag "query_type", "<option></option><option>Insert</option><option>Update</option><option>Delete</option><option>Select</option><option>Complete-CRUD</option>".html_safe, class: "btn btn-default dropdown-toggle" %><br>
+                          <%= select_tag "query_type", "<option disabled selected>-- Select a query --</option><option>Insert</option><option>Update</option><option>Delete</option><option>Select</option><option>Complete-CRUD</option>".html_safe, class: "btn btn-default dropdown-toggle",id:'query_select', :required => true %><br>
                       </div>
                       <b><hr></b>
                       <h3>Database Information(Optional):</h3>
@@ -86,7 +87,7 @@
                           <div class="col-md-6">
                             <div class="field form-group">
                               <label>Table name</label><br />
-                              <%= text_field_tag 'table_name', params[:table_name], :class => 'form-control' %>
+                              <%= text_field_tag 'table_name', params[:table_name], :class => 'form-control label-with-html', :title => "Quality", "data-content" => "aaaaaaaaa" %>
                               <span class="help-block">Insert your table name.</span>
                             </div>
                           </div>
@@ -95,7 +96,7 @@
                          <div class="col-md-6">
                            <div class="field form-group">
                              <label>Table attributes</label><br />
-                              <%= text_field_tag 'database_attr', params[:database_attr],  :class=> 'form-control'%>
+                              <%= text_field_tag 'database_attr', params[:database_attr],  :class=> 'form-control', "data-toggle" => "popover", "title" => "Popover title", "data-content" => "And here's some amazing content. It's very engaging. Right?" %>
                               <span class="help-block">Insert attribute name with comma separaton(eg. attribute1, attribute2 etc.)</span>
                             </div>
                           </div>
@@ -110,9 +111,11 @@
                         </div> 
                         <div class="row">
                             <br>
-                            <% if @output_array.length > 5 %>
-                             <hr>&nbsp;&nbsp;<%= link_to "Download 'database_connect.php'", "download", class: "btn btn-large btn-primary" %>
-                             <% end %>
+                            <div class="col-md-4">
+                              <% if @output_array.length > 5 %>
+                               <hr>&nbsp;&nbsp;<%= link_to "Download 'database_connect.php'", "download", class: "btn btn-large btn-primary" %>
+                               <% end %>
+                            </div>
                         </div>         
                   </div>
                 <div class="col-md-6">
@@ -135,9 +138,10 @@
                 <hr>
             </div>
     <% end %>
+    <%= link_to "hover for popover", "#", id: :elem, rel: :popover, data:{title: "Example Popover", content: "Readymade", trigger: "hover"} %>
     <div class="section-colored text-center">
         
-            <div class="col-md-4">
+            <div class="col-md-2">
                 <a href="https://twitter.com/share" class="twitter-share-button" data-via="pulkitvaishnav">Tweet</a>
                 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script></li>
         
@@ -145,11 +149,12 @@
             <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
             </div>
             <div class="col-md-1">
-                <div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
-            </div>
-            <div class="col-md-1">
             <script src="//platform.linkedin.com/in.js" type="text/javascript"> lang: en_US</script>
             <script type="IN/Share" data-counter="right"></script>
+            </div>
+
+            <div class="col-md-1">
+                <div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
             </div>
     
     </div>

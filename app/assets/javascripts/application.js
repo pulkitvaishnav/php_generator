@@ -13,6 +13,15 @@
 //= require jquery
 //= require bootstrap
 //= require bootstrap.min
+//= require bootstrap-tooltip.js
+//= require bootstrap-popover.js
 //= require custom
 //= require jquery_ujs
 //= require_tree .
+$('.label-with-popover').popover(placement: 'right');
+$(function () {
+  $('[data-toggle="popover"]').popover()
+});
+$(function () {
+    $('#example').popover();
+});

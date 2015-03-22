@@ -32,19 +32,14 @@ class GeneratorsController < ApplicationController
 			name = each_element.to_s .eql? ["", "/form"].to_s
 		end
 		if !name
-			@output_array.push "Please paste a valid code"
+			@output_array.push "Please paste each tag in new line!"
 		elsif input && @query_type.to_s.length > 2
 			@output_array.push "<?php"
 			@output_array.push "\tinclude(database_connect.php);"
-		elsif @query_type.to_s.length < 2 || !input
-			@output_array.push "Please paste a code and must select any query type."			
-		end
-
-
-		counter = 0
+			counter = 0
 		value_of_attribute = Array.new
 
-		if (@query_type .eql? "Insert") && input
+		if (@query_type .eql? "Insert")
 			@output_array.push "\tif ( isset( $_POST['submit'] ) ){"
 			@output_array, counter, value_of_attribute, radiocounter = get_attributes(counter, value_of_attribute, input_array)
 			sql_input = input_query(counter, value_of_attribute, radiocounter, @database_name, @table_name, @database_attr)
@@ -54,7 +49,7 @@ class GeneratorsController < ApplicationController
 				@output_array.push "\t}"
 				@output_array.push "?>"
 			end
-		elsif @query_type .eql? 'Update' && input
+		elsif @query_type .eql? 'Update'
 			@output_array.push "\tif ( isset( $_POST['update'] ) ){"
 			@output_array, counter, value_of_attribute, radiocounter = get_attributes(counter, value_of_attribute, input_array)
 			sql_update = update_query(counter, value_of_attribute, radiocounter, @database_name, @table_name, @database_attr, @cond)
@@ -64,7 +59,7 @@ class GeneratorsController < ApplicationController
 				@output_array.push "\t}"
 				@output_array.push "?>"
 			end
-		elsif (@query_type. eql? "Delete") && input
+		elsif (@query_type. eql? "Delete")
 			@output_array.push "\tif ( isset( $_POST['delete'] ) ){"
 			sql_delete = delete_query(@database_name, @table_name, @cond)
 			@output_array.push sql_delete.to_s
@@ -73,7 +68,7 @@ class GeneratorsController < ApplicationController
 				@output_array.push "\t}"
 				@output_array.push "?>"
 			end
-		elsif @query_type.eql? 'Complete-CRUD' && input
+		elsif @query_type.eql? 'Complete-CRUD'
 			@output_array.push "\t if (isset($_POST['submit'])){"
 			@output_array, counter, value_of_attribute, radiocounter =  get_attributes(counter, value_of_attribute, input_array)
 			sql_input = input_query(counter, value_of_attribute, radiocounter, @database_name, @table_name, @database_attr)
@@ -96,7 +91,7 @@ class GeneratorsController < ApplicationController
 				@output_array.push "\t}"
 				@output_array.push "?>"
 			end
-		elsif @query_type.eql? 'Select' && input
+		elsif @query_type.eql? 'Select'
 			if input
 				sql_select = select_query(@database_name, @table_name, @database_attr, @cond)
 				@output_array.push sql_select
@@ -116,5 +111,11 @@ class GeneratorsController < ApplicationController
 		 	format.html
 		 	format.js	
 		end		
+		elsif @query_type.to_s.length < 2
+			@output_array.push "Please select any query type."			
+		end	
+
+
+		
 	end
 end
